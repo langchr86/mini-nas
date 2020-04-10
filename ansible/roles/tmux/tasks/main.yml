@@ -1,0 +1,33 @@
+- name: Install tmux tools
+  become: yes
+  package: name={{ item }}
+  with_items:
+  - tmux
+
+- name: Add tmux config
+  copy:
+    src: .tmux.conf
+    dest: "~/"
+
+- name: Add tmux-helper
+  copy:
+    src: tmux-helper.bash
+    dest: "~/"
+
+- name: Ensure Unix line endings
+  replace:
+    path: "{{ item }}"
+    regexp: "\r\n"
+    replace: "\n"
+  with_items:
+  - "~/tmux-helper.bash"
+  - "~/.tmux.conf"
+
+- name: Source tmux-helper
+  blockinfile:
+    path: "~/.bashrc"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK: tmux-helper"
+    block: |
+      if [ -f ~/tmux-helper.bash ]; then
+        source ~/tmux-helper.bash
+      fi

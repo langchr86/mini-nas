@@ -35,9 +35,9 @@ Vagrant.configure("2") do |config|
 
   config.vm.hostname = vm_name
 
-  #config.vm.provision "ansible_local" do |ansible|
-  #  ansible.playbook = "/vagrant/ansible/playbook-headless.yml"
-  #  ansible.galaxy_role_file = "/vagrant/ansible/requirements.yml"
-  #end
+  config.vm.provision "ansible_local" do |ansible|
+    ansible.playbook = "/vagrant/ansible/playbook.yml"
+    ansible.galaxy_role_file = "/vagrant/ansible/requirements.yml"
+  end
 
 end

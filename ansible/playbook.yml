@@ -1,0 +1,40 @@
+- hosts: all
+
+  pre_tasks:
+  - name: Update package manager repositories
+    become: yes
+    apt:
+      update_cache: yes
+    changed_when: False
+
+  - include_tasks: tasks/ubuntu_apt.yml
+
+  tasks:
+  - include_tasks: tasks/basicsetup.yml
+  - include_tasks: tasks/virtualbox_additions.yml
+  - include_tasks: tasks/buildtools.yml
+
+  roles:
+  - role: ssh
+    vars:
+      ssh_pub_files: ['ssh_key_clang_home.opub']
+
+  - role: swapfile
+  - role: bash
+  - role: tmux
+
+  - role: git-tools
+    vars:
+      git_aliases: on
+      git_rerere: on
+      git_editor_nano: on
+      git_prompt: on
+      git_archivestotext: off
+      git_docxtotext: off
+      git_pdftotext: off
+      git_xlsxtotext: off
+      git_user_name: "Christian Lang"
+      git_user_email: "lang.chr86@gmail.com"
+
+  - role: dockerce
+

@@ -1,0 +1,25 @@
+- name: Disable automatic package manager update
+  become: yes
+  lineinfile:
+    dest="/etc/apt/apt.conf.d/20auto-upgrades"
+    line="{{ item.line }}"
+    regexp="{{ item.regexp }}"
+    state=present
+    insertafter=EOF
+    create=True
+  with_items:
+  - {regexp: '^APT::Periodic::Update-Package-Lists', line: 'APT::Periodic::Update-Package-Lists "0";'}
+  - {regexp: '^APT::Periodic::Unattended-Upgrade',   line: 'APT::Periodic::Unattended-Upgrade "0";'}
+
+- name: Get possible apt update process
+  become: yes
+  shell: "ps -ef | grep -v grep | grep -w 'apt' | awk '{print $2}'"
+  changed_when: false
+  register: apt_processes
+
+- name: Kill apt update process
+  become: yes
+  shell: "kill {{ item }}"
+  ignore_errors: yes
+  failed_when: false
+  with_items: "{{ apt_processes.stdout_lines }}"

@@ -1,0 +1,34 @@
+- name: Install basic tools
+  become: yes
+  package: name={{ item }}
+  with_items:
+  - tree
+  - nano
+  - wget
+  - htop
+  - rsync
+  - unzip
+  - tar
+
+- name: Install X11 base
+  become: yes
+  package: name={{ item }}
+  with_items:
+  - xbase-clients
+  - x11-common
+
+- name: Set timezone to Europe/Zurich
+  become: yes
+  timezone:
+    name: Europe/Zurich
+
+- name: Set locale to en_US.UTF-8
+  become: yes
+  locale_gen:
+    name: en_US.UTF-8
+
+- name: Set default locale to en_US.UTF-8
+  become: yes
+  lineinfile: dest=/etc/default/locale
+    regexp="LC_ALL"
+    line="LC_ALL=\"en_US.UTF-8\""

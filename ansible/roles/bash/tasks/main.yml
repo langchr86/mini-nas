@@ -1,0 +1,40 @@
+---
+
+- name: Add bash aliases
+  lineinfile:
+    dest="~/.bash_aliases"
+    line="{{ item.line }}"
+    regexp="{{ item.regexp }}"
+    state=present
+    insertafter=EOF
+    create=True
+  with_items:
+  - {regexp: "^alias ll=", line: "alias ll='ls -lhA --color=auto'"}
+  - {regexp: "^alias cdp=", line: "alias cdp='cd $(pwd)'"}
+  - {regexp: "^alias bigdirs=", line: "alias bigdirs='du --max-depth=1 2> /dev/null | sort -n -r | head -n20'"}
+
+- name: Add bash exports
+  lineinfile:
+    dest="~/.bashrc"
+    line="{{ item.line }}"
+    regexp="{{ item.regexp }}"
+    state=present
+    insertafter=EOF
+    create=True
+  with_items:
+  - {regexp: "^export HISTSIZE=", line: "export HISTSIZE=9999"}
+  - {regexp: "^export HISTFILESIZE=", line: "export HISTFILESIZE=99999"}
+  - {regexp: "^export LS_COLORS=", line: "export LS_COLORS='di=0;35'"}
+
+- name: Source usual bash definitions
+  blockinfile:
+    path: "~/.bashrc"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK: usual bash definitions"
+    block: |
+      # Source bash definitions
+      if [ -f /etc/bashrc ]; then
+        source /etc/bashrc
+      fi
+      if [ -f ~/.bash_aliases ]; then
+        source ~/.bash_aliases
+      fi

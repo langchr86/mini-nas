@@ -1,0 +1,103 @@
+# tasks file for swapfile
+---
+- name: install dependencies
+  become: yes
+  apt:
+    name: "{{ swapfile_dependencies }}"
+    state: "{{ apt_install_state | default('latest') }}"
+    update_cache: true
+    cache_valid_time: "{{ apt_update_cache_valid_time | default(3600) }}"
+  tags:
+    - configuration
+    - swapfile
+    - swapfile-install
+    - swapfile-install-dependencies
+
+- block:
+
+  - name: write swap file
+    become: yes
+    command: >
+      fallocate -l {{ swapfile_size }} {{ swapfile_file }}
+    args:
+      creates: "{{ swapfile_file }}"
+      warn: false
+    register: _write_swapfile
+    tags:
+      - swapfile-write-file
+
+  - name: set swap file permissions
+    become: yes
+    file:
+      path: "{{ swapfile_file }}"
+      owner: root
+      group: root
+      mode: 0600
+    tags:
+      - swapfile-set-file-permissions
+
+  - name: create swap file
+    become: yes
+    command: >
+      mkswap {{ swapfile_file }}
+    args:
+      warn: false
+    register: _create_swapfile
+    when: _write_swapfile.changed
+    tags:
+      - swapfile-mkswap
+
+  - name: enable swapfile
+    become: yes
+    command: >
+      swapon {{ swapfile_file }}
+    args:
+      warn: false
+    when: _create_swapfile is changed
+    tags:
+      - swapfile-enable-swapfile
+
+  - name: add swapfile to /etc/fstab
+    become: yes
+    mount:
+      name: none
+      src: "{{ swapfile_file }}"
+      fstype: swap
+      opts: sw
+      passno: '0'
+      dump: '0'
+      state: present
+    tags:
+      - swapfile-fstab
+
+  # TODO: Changing this to `when: swapfile_size` seems to fail, find out why
+  when: swapfile_size != false
+  tags:
+    - configuration
+    - swapfile
+
+- name: configure vm.swappiness
+  become: yes
+  sysctl:
+    name: vm.swappiness
+    value: "{{ swapfile_swappiness }}"
+    reload: true
+    state: present
+  when: swapfile_swappiness is defined
+  tags:
+    - configuration
+    - swapfile
+    - swapfile-vm-swappiness
+
+- name: configure vm.vfs_cache_pressure
+  become: yes
+  sysctl:
+    name: vm.vfs_cache_pressure
+    value: "{{ swapfile_vfs_cache_pressure }}"
+    reload: true
+    state: present
+  when: swapfile_vfs_cache_pressure is defined
+  tags:
+    - configuration
+    - swapfile
+    - swapfile-vm-vfs-cache-pressure
