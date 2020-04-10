@@ -11,6 +11,7 @@
 
   tasks:
   - include_tasks: tasks/basicsetup.yml
+  - include_tasks: tasks/system_tools.yml
   - include_tasks: tasks/virtualbox_additions.yml
   - include_tasks: tasks/buildtools.yml
 

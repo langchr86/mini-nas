@@ -1,0 +1,10 @@
+- name: Install system/monitor tools
+  become: yes
+  package: name={{ item }}
+  with_items:
+  - iotop
+  - htop
+  - rsync
+  - sysstat
+  - dstat
+
