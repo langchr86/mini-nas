@@ -8,6 +8,9 @@
     changed_when: False
 
   - include_tasks: tasks/ubuntu_apt.yml
+  - import_tasks: tasks/users.yml
+    vars:
+      add_users: ['clang', 'kodi']
 
   tasks:
   - include_tasks: tasks/basicsetup.yml
@@ -39,3 +42,22 @@
 
   - role: dockerce
 
+  # see sambagithub.com/bertvv/ansible-role-samba for more info about this role
+  - role: ansible-role-samba
+    become: yes
+    vars:
+      # change passwords later with 'sudo smbpasswd clang' etc.
+      samba_users:
+        - name: clang
+          password: clang
+        - name: kodi
+          password: kodi
+
+      samba_shares:
+        - name: share-main
+          path: "/mnt/subvolumes/share-main"
+          browseable: on
+          group: users
+          write_list: clang
+          valid_users: +users
+          include_file: "share-main-include.conf"

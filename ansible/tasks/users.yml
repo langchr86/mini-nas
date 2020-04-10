@@ -1,0 +1,7 @@
+- name: "add users: {{ add_users }}"
+  become: yes
+  user:
+    name: "{{ item }}"
+    group: users
+  with_items:
+    - "{{ add_users }}"

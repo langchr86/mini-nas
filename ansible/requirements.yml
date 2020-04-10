@@ -1,2 +1,4 @@
 - src: 'https://github.com/langchr86/git-tools.git'
   version: 'master'
+- src: 'https://github.com/bertvv/ansible-role-samba.git'
+  version: 'v2.7.1'
