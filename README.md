@@ -88,7 +88,7 @@ After that step you have a full working NAS running in a VM.
 Customization
 -------------
 
-If you want to customize the setup you can customize the following files:
+If you want to customize the setup you can change the following files:
 
 * `Vagrantfile`
 * `ansible/playbook.yml`
