@@ -1,0 +1,8 @@
+---
+
+btrfs_dev_list_string: ""
+btrfs_pool_label: "pool-main"
+btrfs_raid1_data: off
+btrfs_raid1_metadata: on
+btrfs_mount_path: "/mnt/{{ btrfs_pool_label }}"
+btrfs_subvolume_list: []

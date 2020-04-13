@@ -1,0 +1,8 @@
+- name: "Create subvolumes directory: '{{ btrfs_subvolumes_path }}'"
+  become: yes
+  file:
+    path: "{{ btrfs_subvolumes_path }}"
+    state: directory
+
+- include_tasks: tasks/mksv.yml
+  with_items: "{{ btrfs_subvolume_list }}"

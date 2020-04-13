@@ -1,0 +1,11 @@
+- name: "Ensure filesystem with label: '{{ btrfs_pool_label }}' not already existing"
+  command: "blkid --label {{ btrfs_pool_label }}"
+  register: blkid
+  changed_when: false
+  ignore_errors: true
+  no_log: true
+
+- name: "Create btrfs filesystem on devices: {{ btrfs_dev_list_string }}"
+  become: yes
+  command: "mkfs.btrfs -f --metadata {{ 'raid1' if btrfs_raid1_metadata else 'raid0' }} --data {{ 'raid1' if btrfs_raid1_data else 'raid0' }} --label {{ btrfs_pool_label }} {{ btrfs_dev_list_string }}"
+  when: blkid.rc != 0

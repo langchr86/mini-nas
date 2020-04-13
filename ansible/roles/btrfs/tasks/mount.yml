@@ -1,0 +1,13 @@
+- name: "Create mount point directory: '{{ btrfs_mount_path }}'"
+  become: yes
+  file:
+    path: "{{ btrfs_mount_path }}"
+    state: directory
+
+- name: "Mount filesystem with label: '{{ btrfs_pool_label }}' at '{{ btrfs_mount_path }}'"
+  become: yes
+  mount:
+    src: 'LABEL={{ btrfs_pool_label }}'
+    path: '{{ btrfs_mount_path }}'
+    fstype: btrfs
+    state: mounted

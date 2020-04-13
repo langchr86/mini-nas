@@ -1,0 +1,8 @@
+- name: Install btrfs tools
+  become: yes
+  package:
+    name: btrfs-tools
+
+- import_tasks: tasks/mkfs.yml
+- import_tasks: tasks/mount.yml
+- import_tasks: tasks/subvolumes.yml
