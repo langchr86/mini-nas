@@ -112,9 +112,14 @@ vagrant up --provision
 Usage
 -----
 
+Now your virtual NAS is running and it is time to access the SMB share.
+This can be done by opening an explorer and access the URL: `\\mini-nas`.
+If this does not work you need to use the IP of the VM.
+Evaluate it with connecting to the VM with `vagrant ssh`
+and then get the IP address with `ip a`.
+
 TODO(clang):
 
-* SMB access
 * shadow-copy
 * setup backups with rsync/qtdsync
 * overwatch monitoring files
