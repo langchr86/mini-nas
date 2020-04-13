@@ -63,7 +63,7 @@
 
       samba_shares:
         - name: share-main
-          path: "/mnt/subvolumes/share-main"
+          path: "/mnt/pool-main/subvolumes/share-main"
           browseable: on
           group: users
           write_list: clang
