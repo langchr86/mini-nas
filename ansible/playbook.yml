@@ -44,9 +44,9 @@
     vars:
       btrfs_dev_list_string: "/dev/sdc /dev/sdd"
       btrfs_pool_label: "pool-main"
+      btrfs_mount_path: "/mnt/pool-main"
       btrfs_raid1_data: on
       btrfs_raid1_metadata: on
-      btrfs_mount_path: "/mnt/pool-main"
       btrfs_subvolume_list:
         - "share-main"
 
@@ -69,3 +69,12 @@
           write_list: clang
           valid_users: +users
           include_file: "share-main-include.conf"
+
+  - role: btrbk
+    vars:
+      btrfs_pool_label: "pool-main"
+      btrfs_mount_path: "/mnt/pool-main"
+      btrbk_subvolume_name: "share-main"
+      btrbk_snapshot_preserve_min: "2h"
+      btrbk_snapshot_preserve: "12h 14d 5w 3m"
+      btrbk_samba_config_include_file: "/etc/samba/share-main-include.conf"

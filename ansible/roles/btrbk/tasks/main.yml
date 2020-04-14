@@ -1,0 +1,35 @@
+- name: Install btrbk
+  become: yes
+  package:
+    name: btrbk
+
+- name: "Create snapshots directory: '{{ btrbk_snapshots_path }}'"
+  become: yes
+  file:
+    path: "{{ btrbk_snapshots_path }}"
+    state: directory
+
+- name: "Create config directory: '{{ btrbk_config_path }}'"
+  become: yes
+  file:
+    path: "{{ btrbk_config_path }}"
+    state: directory
+
+- name: "Create btrbk config for: '{{ btrbk_subvolume_name }}'"
+  become: yes
+  template:
+    src: "btrbk.conf"
+    dest: "{{ btrbk_config_file }}"
+
+- name: "Create shadow-copy config in samba config: '{{ btrbk_samba_config_file }}'"
+  become: yes
+  blockinfile:
+    path: "{{ btrbk_samba_config_include_file }}"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK: shadow-copy for '{{ btrbk_subvolume_name }}'"
+    block: |
+      # see: https://www.samba.org/samba/docs/current/man-html/vfs_shadow_copy2.8.html
+      vfs objects = shadow_copy2
+      shadow:format = {{ btrbk_subvolume_name }}.%Y%m%dT%H%M
+      shadow:localtime = yes
+      shadow:sort = desc
+      shadow:snapdir={{ btrbk_snapshots_path }}

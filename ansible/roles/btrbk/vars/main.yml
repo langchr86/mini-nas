@@ -1,0 +1,6 @@
+---
+
+btrbk_snapshots_path: "{{ btrbk_mount_path }}/snapshots"
+btrbk_base_config_path: "/etc/btrbk"
+btrbk_config_path: "{{ btrbk_base_config_path }}/{{ btrbk_pool_label }}"
+btrbk_config_file: "{{ btrbk_config_path }}/{{ btrbk_subvolume_name }}.conf"
