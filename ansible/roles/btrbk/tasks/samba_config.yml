@@ -1,0 +1,15 @@
+- name: "Create shadow-copy config in samba config: '{{ item.samba_config_file }}'"
+  become: yes
+  when: item.samba_config_file is defined
+  blockinfile:
+    path: "{{ item.samba_config_file }}"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK: shadow-copy for '{{ item.name }}'"
+    block: |
+      # see: https://www.samba.org/samba/docs/current/man-html/vfs_shadow_copy2.8.html
+      vfs objects = shadow_copy2
+      shadow:format = {{ item.name }}.%Y%m%dT%H%M
+      shadow:localtime = yes
+      shadow:sort = desc
+      shadow:snapdir={{ btrbk_snapshots_path }}
+
+# this role needs to be after the samba role (which would overwrite this added config)

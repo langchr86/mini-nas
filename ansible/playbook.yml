@@ -49,6 +49,7 @@
       btrfs_raid1_metadata: on
       btrfs_subvolume_list:
         - "share-main"
+        - "test"
 
   # see sambagithub.com/bertvv/ansible-role-samba for more info about this role
   - role: ansible-role-samba
@@ -74,7 +75,10 @@
     vars:
       btrfs_pool_label: "pool-main"
       btrfs_mount_path: "/mnt/pool-main"
-      btrbk_subvolume_name: "share-main"
-      btrbk_snapshot_preserve_min: "2h"
-      btrbk_snapshot_preserve: "12h 14d 5w 3m"
-      btrbk_samba_config_include_file: "/etc/samba/share-main-include.conf"
+      btrbk_subvolumes:
+        - name: "share-main"
+          snapshot_preserve_min: "2h"
+          snapshot_preserve: "12h 14d 5w 3m"
+          samba_config_file: "/etc/samba/share-main-include.conf"
+        - name: "test"
+          snapshot_preserve: "1d"

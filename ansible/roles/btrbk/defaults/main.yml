@@ -2,10 +2,3 @@
 
 btrbk_pool_label: "pool-main"
 btrbk_mount_path: "/mnt/{{ btrbk_pool_label }}"
-btrbk_subvolume_name: "share-main"
-
-btrbk_snapshot_preserve_min: "2h"
-btrbk_snapshot_preserve: "12h 14d 5w 3m"
-
-# because of this this role needs to be after the samba role (which would overwrite this added config)
-btrbk_samba_config_include_file: "/etc/samba/share-main-include.conf"

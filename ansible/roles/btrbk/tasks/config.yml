@@ -1,0 +1,14 @@
+- set_fact:
+    btrbk_config_path: "{{ btrbk_base_config_path }}/{{ btrbk_pool_label }}"
+
+- name: "Create config directory: '{{ btrbk_config_path }}'"
+  become: yes
+  file:
+    path: "{{ btrbk_config_path }}"
+    state: directory
+
+- name: "Create btrbk config for: '{{ item.name }}'"
+  become: yes
+  template:
+    src: "btrbk.conf"
+    dest: "{{ btrbk_config_path }}/{{ item.name }}.conf"
