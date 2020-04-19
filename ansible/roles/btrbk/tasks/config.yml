@@ -7,8 +7,8 @@
     path: "{{ btrbk_config_path }}"
     state: directory
 
-- name: "Create btrbk config for: '{{ item.name }}'"
+- name: "Create btrbk config for: '{{ subvolume.name }}'"
   become: yes
   template:
     src: "btrbk.conf"
-    dest: "{{ btrbk_config_path }}/{{ item.name }}.conf"
+    dest: "{{ btrbk_config_path }}/{{ subvolume.name }}.conf"

@@ -6,3 +6,5 @@
 
 - include_tasks: tasks/mksv.yml
   with_items: "{{ btrfs_subvolume_list }}"
+  loop_control:
+    loop_var: subvolume
