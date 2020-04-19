@@ -38,8 +38,6 @@
       git_pdftotext: off
       git_xlsxtotext: off
 
-  - role: dockerce
-
   - role: btrfs
     vars:
       btrfs_dev_list_string: "/dev/sdc /dev/sdd"
