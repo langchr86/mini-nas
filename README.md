@@ -175,12 +175,24 @@ Real hardware
 If you want build up a real NAS with all these features this should be really simple.
 Install an ubuntu distribution
 (e.g. [ubuntu-server](https://ubuntu.com/download/server) or [armbian](https://www.armbian.com/))
-on your hardware, clone this repository, customize some things in the playbook (mainly the harddisc paths)
+on your hardware,
+install newest ansible,
+clone this repository,
+customize some things in the playbook (mainly the harddisc paths)
 and let ansible do its magic:
 
 ~~~~~~
+sudo apt-add-repository ppa:ansible/ansible
+sudo apt-get update
+sudo apt-get install ansible -y
+
 git clone https://github.com/langchr86/mini-nas
 cd mini-nas
+
+nano ansible/playbook.yml
+# remove line: include_tasks: tasks/virtualbox_additions.yml
+# make own customization
+
 ./run-local.sh
 ~~~~~~
 
