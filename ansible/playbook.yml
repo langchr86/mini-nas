@@ -51,7 +51,7 @@
         - "share-main"
         - "test"
 
-  # see sambagithub.com/bertvv/ansible-role-samba for more info about this role
+  # see https://github.com/bertvv/ansible-role-samba
   - role: ansible-role-samba
     become: yes
     vars:
@@ -77,8 +77,8 @@
       btrfs_mount_path: "/mnt/pool-main"
       btrbk_subvolumes:
         - name: "share-main"
-          snapshot_preserve_min: "2h"
+          snapshot_preserve_min: "1h"
           snapshot_preserve: "12h 14d 5w 3m"
           samba_config_file: "/etc/samba/share-main-include.conf"
+          timer_OnCalendar: "*-*-* *:00,10,20,30,40,50:00"
         - name: "test"
-          snapshot_preserve: "1d"

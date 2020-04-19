@@ -2,3 +2,5 @@
   version: 'master'
 - src: 'https://github.com/bertvv/ansible-role-samba.git'
   version: 'v2.7.1'
+- src: 'https://github.com/vlcty/ansible-systemd-timers.git'
+  version: '3f300a7'
