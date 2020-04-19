@@ -137,6 +137,23 @@ TODO(clang): add presentation PDF
 
 
 
+Real hardware
+-------------
+
+If you want build up a real NAS with all these features this should be really simple.
+Install an ubuntu distribution
+(e.g. [ubuntu-server](https://ubuntu.com/download/server) or [armbian](https://www.armbian.com/))
+on your hardware, clone this repository, customize some things in the playbook (mainly the harddisc paths)
+and let ansible do it's magic:
+
+~~~~~~
+git clone https://github.com/langchr86/mini-nas
+cd mini-nas
+./run-local.sh
+~~~~~~
+
+
+
 References
 ----------
 
