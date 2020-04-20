@@ -1,0 +1,29 @@
+- name: "Ensure filesystem with label: '{{ filesystem.label }}' not already existing"
+  command: "blkid --label {{ filesystem.label }}"
+  register: blkid
+  changed_when: false
+  failed_when: false
+  ignore_errors: true
+  no_log: true
+
+- name: "Create {{ filesystem.type }} filesystem on device: {{ filesystem.device }}"
+  become: yes
+  filesystem:
+    dev: "{{ filesystem.device }}"
+    fstype: "{{ filesystem.type }}"
+    opts: "-L {{ filesystem.label }}"
+  when: blkid.rc != 0
+
+- name: "Create mount point directory: '{{ filesystem.mount_path }}'"
+  become: yes
+  file:
+    path: "{{ filesystem.mount_path }}"
+    state: directory
+
+- name: "Mount filesystem with label: '{{ filesystem.label }}' at '{{ filesystem.mount_path }}'"
+  become: yes
+  mount:
+    src: "LABEL={{ filesystem.label }}"
+    path: "{{ filesystem.mount_path }}"
+    fstype: "{{ filesystem.type }}"
+    state: mounted

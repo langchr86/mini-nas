@@ -1,0 +1,4 @@
+- include_tasks: tasks/filesystem.yml
+  with_items: "{{ filesystems }}"
+  loop_control:
+    loop_var: filesystem
