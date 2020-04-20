@@ -3,6 +3,7 @@
   command: "btrfs subvolume list {{ btrfs_subvolumes_path }}/{{ subvolume }}"
   register: subvolume_list
   changed_when: false
+  failed_when: false
   ignore_errors: true
   no_log: true
 

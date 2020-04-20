@@ -2,6 +2,7 @@
   command: "blkid --label {{ btrfs_pool_label }}"
   register: blkid
   changed_when: false
+  failed_when: false
   ignore_errors: true
   no_log: true
 

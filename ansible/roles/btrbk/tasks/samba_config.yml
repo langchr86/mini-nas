@@ -10,6 +10,6 @@
       shadow:format = {{ subvolume.name }}.%Y%m%dT%H%M
       shadow:localtime = yes
       shadow:sort = desc
-      shadow:snapdir={{ btrbk_snapshots_path }}
+      shadow:snapdir = {{ btrbk_snapshots_path }}
 
 # this role needs to be after the samba role (which would overwrite this added config)
