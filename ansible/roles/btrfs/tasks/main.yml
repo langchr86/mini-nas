@@ -5,4 +5,5 @@
 
 - import_tasks: tasks/mkfs.yml
 - import_tasks: tasks/mount.yml
+- import_tasks: tasks/quota.yml
 - import_tasks: tasks/subvolumes.yml

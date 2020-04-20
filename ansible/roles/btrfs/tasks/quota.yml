@@ -1,0 +1,22 @@
+- name: "Check if quotas enabled: '{{ btrfs_mount_path }}'"
+  become: yes
+  command: "btrfs qgroup show {{ btrfs_mount_path }}"
+  register: qgroup_show
+  changed_when: false
+  failed_when: false
+  ignore_errors: true
+  no_log: true
+
+- name: "Enable quota support on volume: '{{ btrfs_mount_path }}'"
+  become: yes
+  command: "btrfs quota enable {{ btrfs_mount_path }}"
+  when: qgroup_show.rc != 0
+
+- name: "Install helper to show used snapshot space: '{{ btrfs_quota_helper_path }}'"
+  become: yes
+  copy:
+    src: "btrfs-quota"
+    dest: "{{ btrfs_quota_helper_path }}"
+    owner: "root"
+    group: "root"
+    mode: 0755
