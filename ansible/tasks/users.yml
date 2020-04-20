@@ -2,6 +2,6 @@
   become: yes
   user:
     name: "{{ item }}"
-    group: users
+    groups: users
   with_items:
     - "{{ add_users }}"
