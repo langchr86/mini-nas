@@ -147,6 +147,8 @@ snapshot_preserve: "12h 14d 5w 3m"
 ~~~~~~
 
 In this case we keep all snapshots not longer then 1 hour.
+Note that cleanup will only happen at full hours.
+This means intermediate snapshots may exist at most 1 hour and 59 minutes.
 After that we keep 12 hourly, 14 daily, 5 weekly and 3 monthly snapshots.
 
 
