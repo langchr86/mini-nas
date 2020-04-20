@@ -1,0 +1,31 @@
+- name: "Create backup directory: '{{ task.dest }}'"
+  become: yes
+  file:
+    path: "{{ task.dest }}"
+    state: directory
+
+- set_fact:
+    rsync_log_file: "{{ task.dest }}/../{{ task.name }}-rsync.log"
+
+# we have to create a dict out of a list to be able to use a variable as key
+# see: https://docs.ansible.com/ansible/latest/user_guide/playbooks_filters.html#items2dict-filter
+- set_fact:
+    timer_tags:
+      - key: "{{ task.name }}"
+        value:
+          timer_command: "/usr/bin/rsync --archive --delete --stats --log-file={{ rsync_log_file }} {{ task.src }}/ {{ task.dest }}"
+          timer_user: root
+          timer_persistent: yes
+          timer_AccuracySec: 1m
+          timer_OnCalendar: "{{ subvolume.timer_OnCalendar | default('*-*-* 03:00:00') }}"
+# see: https://www.freedesktop.org/software/systemd/man/systemd.timer.html
+# for definition of value in timer_OnCalendar
+
+# see: https://github.com/vlcty/ansible-systemd-timers
+- include_role:
+    name: ansible-systemd-timers
+    apply:
+      become: yes
+  vars:
+    timers:
+      - "{{ timer_tags | items2dict }}"

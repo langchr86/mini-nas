@@ -1,0 +1,9 @@
+- name: Install rsync
+  become: yes
+  package:
+    name: rsync
+
+- include_tasks: tasks/task.yml
+  with_items: "{{ rsync_tasks }}"
+  loop_control:
+    loop_var: task

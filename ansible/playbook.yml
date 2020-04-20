@@ -46,7 +46,7 @@
       btrfs_raid1_metadata: on
       btrfs_subvolume_list:
         - "share-main"
-        - "test"
+        - "backups"
 
   # see https://github.com/bertvv/ansible-role-samba
   - role: ansible-role-samba
@@ -67,6 +67,11 @@
           write_list: clang
           valid_users: +users
           include_file: "share-main-include.conf"
+        - name: backups
+          path: "/mnt/pool-main/subvolumes/backups"
+          browseable: on
+          group: users
+          valid_users: +users
 
   - role: btrbk
     vars:
@@ -78,4 +83,11 @@
           snapshot_preserve: "12h 14d 5w 3m"
           samba_config_file: "/etc/samba/share-main-include.conf"
           timer_OnCalendar: "*-*-* *:00,10,20,30,40,50:00"
-        - name: "test"
+
+  - role: rsync
+    vars:
+      rsync_tasks:
+        - name: "backup-share-main"
+          src: "/mnt/pool-main/subvolumes/share-main/"
+          dest: "/mnt/pool-main/subvolumes/backups/share-main/"
+          timer_OnCalendar: "*-*-* *:05:00"
