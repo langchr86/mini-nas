@@ -19,8 +19,8 @@ Vagrant.configure("2") do |config|
     vb.customize ["modifyvm", :id, "--vram", "64"]
     vb.customize ["modifyvm", :id, "--spec-ctrl", "on"]
 
-    disk_count = 4
-    disk_size_gb = 50
+    disk_count = 3
+    disk_size_gb = 20
 	disk_format = 'vdi'
 	disk_controller = 'SCSI'		# already existing in ubuntu box
     (0..disk_count-1).each do |i|
