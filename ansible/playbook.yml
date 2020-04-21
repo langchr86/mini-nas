@@ -82,8 +82,8 @@
 
   - role: btrbk
     vars:
-      btrfs_pool_label: "pool-main"
-      btrfs_mount_path: "/mnt/pool-main"
+      btrbk_pool_label: "pool-main"
+      btrbk_mount_path: "/mnt/pool-main"
       btrbk_subvolumes:
         - name: "share-main"
           snapshot_preserve_min: "1h"
