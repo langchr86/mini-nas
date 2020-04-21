@@ -15,7 +15,7 @@
 - name: "Install helper to show used snapshot space: '{{ btrfs_quota_helper_path }}'"
   become: yes
   copy:
-    src: "btrfs-quota"
+    src: "btrfs-snapshot-quotas"
     dest: "{{ btrfs_quota_helper_path }}"
     owner: "root"
     group: "root"
