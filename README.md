@@ -192,7 +192,6 @@ git clone https://github.com/langchr86/mini-nas
 cd mini-nas
 
 nano ansible/playbook.yml
-# remove line: include_tasks: tasks/virtualbox_additions.yml
 # make own customization
 
 ./run-local.sh
