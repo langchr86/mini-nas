@@ -18,10 +18,6 @@
       # change passwords later with 'sudo passwd clang' etc.
 
   roles:
-  - role: ssh
-    vars:
-      ssh_pub_files: ['ssh_key_clang_home.opub']
-
   - role: swapfile
   - role: bash
   - role: tmux
