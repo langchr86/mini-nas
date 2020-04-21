@@ -74,7 +74,8 @@ Then you need to clone this project somewhere on your disk:
 git clone https://github.com/langchr86/mini-nas
 ~~~~~~
 
-And startup` vagrant` to setup the virtual machine and install all the tools using `ansible`:
+And startup` vagrant` to setup the virtual machine and install all the tools using `ansible`.
+Ensure you have a console with admin privileges.
 
 ~~~~~~
 cd mini-nas
