@@ -4,7 +4,6 @@
   with_items:
   - iotop
   - htop
-  - rsync
   - sysstat
   - dstat
 

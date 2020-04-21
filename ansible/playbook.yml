@@ -7,14 +7,15 @@
       update_cache: yes
     changed_when: False
 
-  - include_tasks: tasks/ubuntu_apt.yml
+  - import_tasks: tasks/ubuntu_apt.yml
+  - import_tasks: tasks/basicsetup.yml
+  - import_tasks: tasks/system_tools.yml
   - import_tasks: tasks/users.yml
     vars:
-      add_users: ['clang', 'kodi']
-
-  tasks:
-  - include_tasks: tasks/basicsetup.yml
-  - include_tasks: tasks/system_tools.yml
+      add_users:
+        - 'clang'
+        - 'kodi'
+      # change passwords later with 'sudo passwd clang' etc.
 
   roles:
   - role: ssh
