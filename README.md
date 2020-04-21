@@ -211,10 +211,9 @@ To access old/lost data from your client hosts simply search them in the `share-
 
 ### TODO(clang)
 
-* setup backups with rsync/qtdsync
 * overwatch monitoring files
 * show some maintenance steps/tools/commands (scrub, temps, free space, disk replace/add)
-* cockpit
+* test not RAID configs
 
 
 
@@ -261,6 +260,12 @@ Known issues / future features
 
 * Playbook is not idempotent because the samba role does create its
   config file via `template` mechanism and the btrbk role does manipulate this.
+* Monitoring scripts missing
+  * quotas
+  * btrfs status
+  * smart
+* timers for scrubing / defrag
+* seting qutoas for subvolumes by role
 
 
 
