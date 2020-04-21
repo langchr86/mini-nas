@@ -47,6 +47,7 @@
       btrfs_subvolume_list:
         - "share-main"
 
+  # note: creation of filesystems on big discs may take a long time to finish
   - role: filesystem
     vars:
       filesystems:
@@ -71,11 +72,12 @@
           path: "/mnt/pool-main/subvolumes/share-main"
           browseable: on
           group: users
-          write_list: clang
           valid_users: +users
+          write_list: clang
           include_file: "share-main-include.conf"
-        - name: backups
-          path: "/mnt/backups"
+        # Only to show the backuped data. In real system this is not needed because of snapshots
+        - name: share-main-backup
+          path: "/mnt/backups/share-main"
           browseable: on
           group: users
           valid_users: +users
