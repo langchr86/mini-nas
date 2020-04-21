@@ -153,6 +153,62 @@ This means intermediate snapshots may exist at most 1 hour and 59 minutes.
 After that we keep 12 hourly, 14 daily, 5 weekly and 3 monthly snapshots.
 
 
+### Data redundancy
+
+We use RAID1 configuration for data and metadata in the btrfs volume.
+This means not only the management data of the filesystem
+but also the user data on the volume is organized
+that each data block is contained 2 times on individual physical hard disc.
+
+This means that each block exists on both used discs in our setup.
+But RAID mechanisms do not provide some kind of backup but only high availability.
+So if one drive dies we can still access and work with our data.
+But if the user does delete a file which is needed later the data is erased on both discs.
+
+To secure users against such mistakes we have the previous described snapshot mechanism
+which let us access a defined state of the whole samba share at a given time.
+So the primary mechanism to fight data loss are the snapshots.
+
+RAID1 is optional but gives us more security and in addition helps when bitrot happens.
+In such a case the filesystem detects errors in data blocks by using checksums.
+If we have a RAID1 configuration the filesystem corrects the defective block by using the sibling on the other disc.
+
+
+### Disaster backups
+
+A third layer of security can be added by adding a third disc
+which uses a different filesystem and collects regularly a complete state of the btrfs volume.
+This is implemented by a simple `rsync` synchronization.
+The different filesystem is used to be secure to systematic failures
+that could happen because of a bug in the btrfs implementation.
+The disaster copy is mounted under `/mnt/backups/share-main/`
+and can also be accessed by a read-only samba share.
+
+
+### Client backups
+
+As described in the introduction we want to leverage the introduced mechanism for other hosts too.
+This is implemented by backing-up client data to the `share-main` on the NAS.
+Like that we get all the snapshots and other mechanisms for these backups too.
+
+Therefore the `rsync`-daemon is running on the NAS to which clients can send their backups with `rsync`.
+A simple and portable client application for this is
+[`qtdsync`](http://qtdtools.doering-thomas.de/page.php?tool=QtdSync&page=QtdSync).
+This is a simple Java-GUI with a MinGW compiled version of `ssh` and `rsync`.
+
+To setup a backup job we have to use some special settings:
+
+* Activate the expert settings in the configuration.
+* Use the following command line arguments for each backup job:
+  `--hard-links --delete --ignore-errors --force --perms --chmod=Du=rwx,Dgo=rx,Fu=rw,Fgo=r`
+* Configure the destination as `rsync` and use `mini-nas/backups` as host.
+* Use the `qtdsync` user the the same for password.
+* Use one of the configured host names in the playbook, e.g: `lang-ct2014`
+
+With the scheduling you can control how many times your data is synchronized to the NAS.
+To access old/lost data from your client hosts simply search them in the `share-main`.
+
+
 ### TODO(clang)
 
 * setup backups with rsync/qtdsync
