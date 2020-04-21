@@ -74,7 +74,7 @@ Then you need to clone this project somewhere on your disk:
 git clone https://github.com/langchr86/mini-nas
 ~~~~~~
 
-And startup` vagrant` to setup the virtual machine and install all the tools using `ansible`.
+And startup `vagrant` to setup the virtual machine and install all the tools using `ansible`.
 Ensure you have a console with admin privileges.
 
 ~~~~~~
@@ -259,7 +259,7 @@ nano ansible/playbook.yml
 Known issues / future features
 ------------------------------
 
-* playbook is not idempotent because the samba role does create its
+* Playbook is not idempotent because the samba role does create its
   config file via `template` mechanism and the btrbk role does manipulate this.
 
 
@@ -269,7 +269,8 @@ References
 
 Some parts of my personal setup are published in other github projects:
 
-* [hostcontrold](https://github.com/langchr86/hostcontrold): Small daemon that overwatches servers in a network and shuts them down to save power.
+* [hostcontrold](https://github.com/langchr86/hostcontrold):
+  Small daemon that overwatches servers in a network and shuts them down to save power.
 
 
 
