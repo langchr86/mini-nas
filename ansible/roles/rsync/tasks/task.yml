@@ -17,7 +17,7 @@
           timer_user: root
           timer_persistent: yes
           timer_AccuracySec: 1m
-          timer_OnCalendar: "{{ subvolume.timer_OnCalendar | default('*-*-* 03:00:00') }}"
+          timer_OnCalendar: "{{ task.timer_OnCalendar | default('*-*-* 03:00:00') }}"
 # see: https://www.freedesktop.org/software/systemd/man/systemd.timer.html
 # for definition of value in timer_OnCalendar
 
