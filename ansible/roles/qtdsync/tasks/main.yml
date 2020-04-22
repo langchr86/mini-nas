@@ -30,17 +30,17 @@
     owner: "{{ qtdsync_user }}"
     group: "users"
 
-- include_tasks: tasks/backup_users.yml
-  with_items: "{{ qtdsync_backup_users }}"
+- include_tasks: tasks/backups.yml
+  with_items: "{{ qtdsync_backups }}"
   loop_control:
-    loop_var: backup_user
+    loop_var: backup
 
 - name: "Create rsyncd secrets file: '{{ qtdsync_rsyncd_secrets }}'"
   become: yes
   template:
     src: "rsyncd.secrets"
     dest: "{{ qtdsync_rsyncd_secrets }}"
-    mode: 0500
+    mode: 0400
     owner: root
     group: root
   notify: restart rsync daemon

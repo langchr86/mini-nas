@@ -102,6 +102,9 @@
       qtdsync_user: "qtdsync"
       qtdsync_rsyncd_password: "qtdsync"
       qtdsync_backups_path: "/mnt/pool-main/subvolumes/share-main/backups"
-      qtdsync_backup_users:
-        - "clang"
-        - "kodi"
+      qtdsync_backups:
+        - user_name: 'clang'
+          subfolders:
+            - 'lang-ct2014'
+            - 'lang-xps13'
+        - user_name: 'kodi'

@@ -1,0 +1,30 @@
+- set_fact:
+    config_path: "{{ qtdsync_rsyncd_config_folder }}/{{ backup.user_name }}.conf"
+    backup_path: "{{ qtdsync_backups_path }}/{{ backup.user_name }}/"
+
+- name: "Create rsyncd config: '{{ config_path }}'"
+  become: yes
+  template:
+    src: "rsyncd_user.conf"
+    dest: "{{ config_path }}"
+  notify: restart rsync daemon
+
+- name: "Create per user backup directory: '{{ backup_path }}'"
+  become: yes
+  file:
+    path: "{{ backup_path }}"
+    state: directory
+    mode: 0755
+    owner: "{{ backup.user_name }}"
+    group: "users"
+
+- name: "Create subfolders for user: '{{ backup.user_name }}'"
+  become: yes
+  file:
+    path: "{{ backup_path }}/{{ item }}"
+    state: directory
+    mode: 0755
+    owner: "{{ backup.user_name }}"
+    group: "users"
+  when: backup.subfolders is defined
+  with_items: "{{ backup.subfolders }}"

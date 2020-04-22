@@ -196,17 +196,16 @@ A simple and portable client application for this is
 [`qtdsync`](http://qtdtools.doering-thomas.de/page.php?tool=QtdSync&page=QtdSync).
 This is a simple Java-GUI with a MinGW compiled version of `ssh` and `rsync`.
 
-To setup a backup job we have to use some special settings:
+To setup a backup job we have to use these settings:
 
-* Activate the expert settings in the configuration.
-* Use the following command line arguments for each backup job:
-  `--hard-links --delete --ignore-errors --force --perms --chmod=Du=rwx,Dgo=rx,Fu=rw,Fgo=r`
-* Configure the destination as `rsync` and use `mini-nas/backups` as host.
-* Use the `qtdsync` user the the same for password.
-* Use one of the configured host names in the playbook, e.g: `lang-ct2014`
+* Configure the destination as `rsync` and use `mini-nas/clang` as host.
+* Use the `qtdsync` user and the corresponding password for authentication.
+* As path you can choose the host name. In this example `lang-ct2014`.
+* All the needed subfolders need to be defined in the qtdsync role too.
 
 With the scheduling you can control how many times your data is synchronized to the NAS.
 To access old/lost data from your client hosts simply search them in the `share-main`.
+Each user can only access its own backups.
 
 
 ### TODO(clang)
