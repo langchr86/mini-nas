@@ -5,4 +5,5 @@ btrfs_pool_label: "pool-main"
 btrfs_raid1_data: off
 btrfs_raid1_metadata: on
 btrfs_mount_path: "/mnt/{{ btrfs_pool_label }}"
+btrfs_status_log_path: "/mnt"
 btrfs_subvolume_list: []

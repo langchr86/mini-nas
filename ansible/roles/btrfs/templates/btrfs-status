@@ -1,0 +1,47 @@
+#!/bin/bash -e
+
+if [[ $# -ne 1 ]]; then
+  echo "usage: $0 MOUNT_POINT"
+  exit 1
+fi
+
+MOUNT_POINT=$1
+
+if [[ ! -d "${MOUNT_POINT}" ]]; then
+  echo "${MOUNT_POINT} is no directory"
+  exit 1
+fi
+
+if [[ "$EUID" -ne 0 ]]; then
+  echo "Please run as root"
+  exit 1
+fi
+
+
+date
+printf "\n\n"
+
+
+printf "btrfs device stats ${MOUNT_POINT} \n==============================\n"
+btrfs device stats ${MOUNT_POINT}
+printf "\n\n"
+
+
+printf "btrfs filesystem show ${MOUNT_POINT} \n==============================\n"
+btrfs filesystem show ${MOUNT_POINT}
+printf "\n\n"
+
+
+printf "btrfs filesystem df ${MOUNT_POINT} \n==============================\n"
+btrfs filesystem df ${MOUNT_POINT}
+printf "\n\n"
+
+
+printf "btrfs device usage ${MOUNT_POINT} \n==============================\n"
+btrfs device usage ${MOUNT_POINT}
+printf "\n\n"
+
+
+printf "btrfs filesystem usage ${MOUNT_POINT} \n==============================\n"
+btrfs filesystem usage ${MOUNT_POINT}
+printf "\n\n"

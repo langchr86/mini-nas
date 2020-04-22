@@ -40,6 +40,7 @@
       btrfs_mount_path: "/mnt/pool-main"
       btrfs_raid1_data: on
       btrfs_raid1_metadata: on
+      btrfs_status_log_path: "/mnt/pool-main/subvolumes/share-main"
       btrfs_subvolume_list:
         - "share-main"
 
