@@ -1,0 +1,5 @@
+---
+
+rsyncd_rsyncd_global_config: "/etc/rsyncd.conf"
+rsyncd_rsyncd_config_folder: "/etc/rsyncd.d"
+rsyncd_rsyncd_secrets: "/etc/rsyncd.secrets"

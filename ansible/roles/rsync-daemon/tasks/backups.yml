@@ -1,6 +1,6 @@
 - set_fact:
-    config_path: "{{ qtdsync_rsyncd_config_folder }}/{{ backup.user_name }}.conf"
-    backup_path: "{{ qtdsync_backups_path }}/{{ backup.user_name }}/"
+    config_path: "{{ rsyncd_rsyncd_config_folder }}/{{ backup.user_name }}.conf"
+    backup_path: "{{ rsyncd_backups_path }}/{{ backup.user_name }}/"
 
 - name: "Create rsyncd config: '{{ config_path }}'"
   become: yes

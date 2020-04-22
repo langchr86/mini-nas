@@ -1,5 +1,0 @@
----
-
-qtdsync_rsyncd_global_config: "/etc/rsyncd.conf"
-qtdsync_rsyncd_config_folder: "/etc/rsyncd.d"
-qtdsync_rsyncd_secrets: "/etc/rsyncd.secrets"

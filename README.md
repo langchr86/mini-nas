@@ -201,7 +201,7 @@ To setup a backup job we have to use these settings:
 * Configure the destination as `rsync` and use `mini-nas/clang` as host.
 * Use the `qtdsync` user and the corresponding password for authentication.
 * As path you can choose the host name. In this example `lang-ct2014`.
-* All the needed subfolders need to be defined in the qtdsync role too.
+* All the needed subfolders need to be defined in the rsync-daemon role too.
 
 With the scheduling you can control how many times your data is synchronized to the NAS.
 To access old/lost data from your client hosts simply search them in the `share-main`.

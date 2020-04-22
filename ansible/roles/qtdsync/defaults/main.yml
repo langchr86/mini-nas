@@ -1,5 +1,0 @@
----
-
-qtdsync_user: "qtdsync"
-qtdsync_rsyncd_password: "qtdsync"
-qtdsync_backups_path: "/mnt/backups"
