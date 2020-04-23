@@ -12,10 +12,10 @@
   - import_tasks: tasks/system_tools.yml
   - import_tasks: tasks/users.yml
     vars:
+      # change passwords later with 'sudo passwd clang' etc.
       add_users:
         - 'clang'
         - 'kodi'
-      # change passwords later with 'sudo passwd clang' etc.
 
   roles:
   - role: swapfile
@@ -44,7 +44,7 @@
       btrfs_subvolume_list:
         - "share-main"
 
-  # note: creation of filesystems on big discs may take a long time to finish
+  # note: creation of filesystems on big disks may take a long time to finish
   - role: filesystem
     vars:
       filesystems:
@@ -63,7 +63,6 @@
           password: clang
         - name: kodi
           password: kodi
-
       samba_shares:
         - name: share-main
           path: "/mnt/pool-main/subvolumes/share-main"

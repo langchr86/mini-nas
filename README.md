@@ -158,12 +158,12 @@ After that we keep 12 hourly, 14 daily, 5 weekly and 3 monthly snapshots.
 We use RAID1 configuration for data and metadata in the btrfs volume.
 This means not only the management data of the filesystem
 but also the user data on the volume is organized
-that each data block is contained 2 times on individual physical hard disc.
+that each data block is contained 2 times on individual physical hard disk.
 
-This means that each block exists on both used discs in our setup.
+This means that each block exists on both used disks in our setup.
 But RAID mechanisms do not provide some kind of backup but only high availability.
 So if one drive dies we can still access and work with our data.
-But if the user does delete a file which is needed later the data is erased on both discs.
+But if the user does delete a file which is needed later the data is erased on both disks.
 
 To secure users against such mistakes we have the previous described snapshot mechanism
 which let us access a defined state of the whole samba share at a given time.
@@ -171,12 +171,12 @@ So the primary mechanism to fight data loss are the snapshots.
 
 RAID1 is optional but gives us more security and in addition helps when bitrot happens.
 In such a case the filesystem detects errors in data blocks by using checksums.
-If we have a RAID1 configuration the filesystem corrects the defective block by using the sibling on the other disc.
+If we have a RAID1 configuration the filesystem corrects the defective block by using the sibling on the other disk.
 
 
 ### Disaster backups
 
-A third layer of security can be added by adding a third disc
+A third layer of security can be added by adding a third disk
 which uses a different filesystem and collects regularly a complete state of the btrfs volume.
 This is implemented by a simple `rsync` synchronization.
 The different filesystem is used to be secure to systematic failures
@@ -235,7 +235,7 @@ Install an ubuntu distribution
 on your hardware,
 install newest ansible,
 clone this repository,
-customize some things in the playbook (mainly the harddisc paths)
+customize some things in the playbook (mainly the harddisk paths)
 and let ansible do its magic:
 
 ~~~~~~
