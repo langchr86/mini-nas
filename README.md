@@ -230,9 +230,31 @@ sudo btrfs-snapshot-quotas /mnt/pool-main/
 ~~~~~~
 
 
-### S.M.A.R.T.
+### S.M.A.R.T. and general disk status
 
-TODO(clang): overwatch monitoring files / scripts
+It is important to not only monitor the health of the filesystem but also of the disks.
+Most modern disks provide the so called S.M.A.R.T. interface to read out statistics
+that can help to detect when hardware failures will happen.
+
+To read out those statistics for all drives we can use the script:
+
+~~~~~~
+sudo disk-status
+~~~~~~
+
+This gives us the current disk temperatures and a short health eport at the top.
+After that the extensive statistics report of all disks follows.
+
+In addition we can run short or long self-tests on all disks with:
+
+~~~~~~
+sudo smart-short-test
+# or
+sudo smart-long-test
+~~~~~~
+
+The status script and the short disk self-test will also automatically run daily
+and log the statistics into the configured `disk_monitoring_status_log_path`.
 
 
 
@@ -304,6 +326,7 @@ git clone https://github.com/langchr86/mini-nas
 cd mini-nas
 
 nano ansible/playbook.yml
+# enable disk-monitoring role
 # make own customization
 
 ./run-local.sh
@@ -316,8 +339,6 @@ Known issues / future features
 
 * Playbook is not idempotent because the samba role does create its
   config file via `template` mechanism and the btrbk role does manipulate this.
-* monitoring: SMART scripts missing
-* monitoring: setup temperature sensors and scripts/timers
 
 
 

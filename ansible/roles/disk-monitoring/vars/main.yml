@@ -1,0 +1,4 @@
+---
+
+disk_monitoring_disk_status_file: "/usr/bin/disk-status"
+disk_monitoring_short_test_file: "/usr/bin/smart-short-test"

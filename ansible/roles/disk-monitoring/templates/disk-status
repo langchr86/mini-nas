@@ -1,0 +1,40 @@
+#!/bin/bash
+
+if [[ "$EUID" -ne 0 ]]; then
+  echo "Please run as root"
+  exit 1
+fi
+
+function smart_get_overall_health_report {
+	local DEVICE=${1}
+	local TYPE=${2}
+	printf "health report: ${DEVICE} \n==============================\n"
+	smartctl  -d ${TYPE} --health "${DEVICE}" | grep "SMART Health Status"
+	smartctl  -d ${TYPE} --health "${DEVICE}" | grep "overall-health self-assessment test result"
+	smartctl  -d ${TYPE} --log=error "${DEVICE}" | grep "Error Count"
+	smartctl  -d ${TYPE} --log=selftest "${DEVICE}" | grep "# 1"
+	printf "\n\n"
+}
+
+function smart_get_extensive_log {
+	local DEVICE=${1}
+  local TYPE=${2}
+	printf "\n\n"
+	printf "smartctl -a ${DEVICE} -d ${TYPE} \n==============================\n"
+	smartctl -a ${DEVICE} -d ${TYPE}
+	printf "\n\n"
+}
+
+printf "HDD temperatures \n==============================\n"
+{% for device in disk_monitoring_devices %}
+hddtemp {{ device.temp_type|default('SATA') }}:{{ device.path }}
+{% endfor %}
+printf "\n\n"
+
+{% for device in disk_monitoring_devices %}
+smart_get_overall_health_report {{ device.path }} {{ device.smart_type|default('auto') }}
+{% endfor %}
+
+{% for device in disk_monitoring_devices %}
+smart_get_extensive_log {{ device.path }} {{ device.smart_type|default('auto') }}
+{% endfor %}

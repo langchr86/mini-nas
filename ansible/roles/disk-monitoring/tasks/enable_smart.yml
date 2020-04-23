@@ -1,0 +1,37 @@
+- set_fact:
+    device_options: "-d {{ device.smart_type|default('auto') }} {{ device.path }}"
+
+- name: "Check S.M.A.R.T. info of: '{{ device.path }}'"
+  become: yes
+  command: "smartctl -i {{ device_options }}"
+  register: smart_info
+  changed_when: false
+  failed_when: false
+
+- set_fact:
+    smart_available: False
+
+- name: "Check if S.M.A.R.T. is available on: '{{ device.path }}'"
+  set_fact:
+    smart_available: True
+  when: smart_info.stdout is regex('SMART support.*Available')
+
+- fail:
+    msg: >
+      This role is only usable on devices that support S.M.A.R.T..
+      Check with: 'sudo smartctl -i {{ device_options }}'.
+      Maybe you did specify the wrong device type: '{{ device.smart_type }}'?
+  when: smart_available == False
+
+- set_fact:
+    smart_enabled: False
+
+- name: "Check if S.M.A.R.T. is enabled on: '{{ device.path }}'"
+  set_fact:
+    smart_enabled: True
+  when: smart_available and smart_info.stdout is regex('SMART support.*Enabled')
+
+- name: "Enable S.M.A.R.T. on: {{ device.path }}"
+  become: yes
+  command: "smartctl -s on {{ device_options }}"
+  when: smart_available and smart_enabled == False

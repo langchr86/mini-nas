@@ -1,0 +1,65 @@
+- name: Install S.M.A.R.T tools
+  become: yes
+  package:
+    name: smartmontools
+
+- name: Install hddtemp
+  become: yes
+  package:
+    name: hddtemp
+
+- include_tasks: tasks/enable_smart.yml
+  with_items: "{{ disk_monitoring_devices }}"
+  loop_control:
+    loop_var: device
+
+- name: "Install helper scripts"
+  become: yes
+  template:
+    src: "{{ item }}"
+    dest: "/usr/bin/"
+    owner: "root"
+    group: "root"
+    mode: 0755
+  with_items:
+    - "disk-status"
+    - "smart-long-test"
+    - "smart-short-test"
+
+- set_fact:
+    timer_tags:
+      - key: "disk-status"
+        value:
+          timer_command: "/bin/bash -c \"{{ disk_monitoring_disk_status_file }} > {{ disk_monitoring_status_log_path }}/disk-status.log\""
+          timer_user: root
+          timer_persistent: yes
+          timer_AccuracySec: 1m
+          timer_OnCalendar: "*-*-* 20:00:00"
+
+- name: "Setup daily disk-status timer event"
+  include_role:
+    name: ansible-systemd-timers
+    apply:
+      become: yes
+  vars:
+    timers:
+      - "{{ timer_tags | items2dict }}"
+
+- set_fact:
+    timer_tags:
+      - key: "smart-short-test"
+        value:
+          timer_command: "{{ disk_monitoring_short_test_file }}"
+          timer_user: root
+          timer_persistent: yes
+          timer_AccuracySec: 1m
+          timer_OnCalendar: "*-*-* 02:00:00"
+
+- name: "Setup daily smart-short-test timer event"
+  include_role:
+    name: ansible-systemd-timers
+    apply:
+      become: yes
+  vars:
+    timers:
+      - "{{ timer_tags | items2dict }}"

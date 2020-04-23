@@ -74,6 +74,18 @@
             - "spindown_time = 180"
             - "apm = 64"
 
+# Because the virtual disks do not support SMART this role is disabled. Enable on real hardware.
+#  - role: disk-monitoring
+#    vars:
+#      disk_monitoring_status_log_path: "/mnt/pool-main/subvolumes/share-main"
+#      disk_monitoring_devices:
+#        - path: '/dev/sda'
+#          smart_type: 'scsi'  # type used in the -d parameter of smartctl
+#          temp_type: 'SATA'   # TYPE field used of hddtemp
+#        - path: '/dev/sdb'
+#          smart_type: 'scsi'
+#        - path: '/dev/sdc'
+
   - role: ansible-role-samba
     become: yes
     vars:
