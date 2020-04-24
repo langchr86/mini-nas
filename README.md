@@ -208,11 +208,77 @@ To access old/lost data from your client hosts simply search them in the `share-
 Each user can only access its own backups.
 
 
-### TODO(clang)
 
-* overwatch monitoring files
-* show some maintenance steps/tools/commands (scrub, temps, free space, disk replace/add)
-* test not RAID configs
+Monitoring
+----------
+
+### btrfs
+
+To see an overall status of a btrfs volume we can use:
+
+~~~~~~
+sudo btrfs-status /mnt/pool-main/
+~~~~~~
+
+This is also executed automatically once per day by the systemd timer `btrfs-status-pool-main`
+and the results are stored in `/mnt/pool-main/subvolumes/share-main/btrfs-status-pool-main.log`.
+
+To see all space used by snapshots of one volume we can use:
+
+~~~~~~
+sudo btrfs-snapshot-quotas /mnt/pool-main/
+~~~~~~
+
+
+### S.M.A.R.T.
+
+TODO(clang): overwatch monitoring files / scripts
+
+
+
+Maintenance
+-----------
+
+To keep your btrfs volume clean and ensure data integrity you should execute some housekeeping approx. once per year:
+
+
+### Scrubbing
+
+This checks all checksums and corrects possible errors by using redundant copy in RAID1 configuration.
+If no RAID1 an error is printed.
+This is the main mechanism against bitrot.
+This process needs a long time and is really I/O heavy.
+
+~~~~~~
+# start and control scrub process.
+sudo btrfs scrub start /mnt/pool-main
+sudo btrfs scrub status /mnt/pool-main
+sudo btrfs scrub cancel /mnt/pool-main
+sudo btrfs scrub resume /mnt/pool-main
+
+# check status (keep all those open in tmux panes)
+watch -n 5 sudo btrfs scrub status /mnt
+watch -n 5 sudo btrfs scrub status -R -d /mnt
+watch -n 5 sudo cat /var/lib/btrfs/scrub.status.<UUID>
+systemctl -f
+~~~~~~
+
+
+### Defragmentation
+
+Helps to optimize free space by moving data of mostly empty blocks into others.
+Therefore frees blocks and allows to store big files in less blocks.
+
+~~~~~~
+# try to rebalance blocks (data / metadata) with less then 80% usage
+sudo btrfs balance start -dusage=80 /mnt/pool-main
+sudo btrfs balance start -musage=80 /mnt/pool-main
+~~~~~~
+
+
+### Replace failed disk
+
+> See: [Replacing failed devices](https://btrfs.wiki.kernel.org/index.php/Using_Btrfs_with_Multiple_Devices#Replacing_failed_devices)
 
 
 
