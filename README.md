@@ -137,20 +137,20 @@ At least if there is a snapshot with a previous version of this file/folder.
 Snapshots are created with the `btrbk` utility by creating read-only snapshots of a `btrfs` subvolume.
 All the created snapshots are directly accessable under `/mnt/pool-main/snapshots`.
 The snapshots are automatically cleaned-up, each time the tool runs.
-When the tool is executed is controlled by: `timer_OnCalendar: "*-*-* *:00,10,20,30,40,50:00"`.
-In this case it is run each 10 minuntes.
-This means we get a new snapshot each 10 minutes.
+When the tool is executed is controlled by: `timer_OnCalendar: "*-*-* *:00,30:00"`.
+In this case it is run each 30 minuntes.
+This means we get a new snapshot each 30 minutes.
 The cleanup is controlled by:
 
 ~~~~~~
 snapshot_preserve_min: "1h"
-snapshot_preserve: "12h 14d 5w 3m"
+snapshot_preserve: "24h 14d 5w 3m"
 ~~~~~~
 
 In this case we keep all snapshots not longer then 1 hour.
 Note that cleanup will only happen at full hours.
 This means intermediate snapshots may exist at most 1 hour and 59 minutes.
-After that we keep 12 hourly, 14 daily, 5 weekly and 3 monthly snapshots.
+After that we keep 24 hourly, 14 daily, 5 weekly and 3 monthly snapshots.
 
 
 ### Data redundancy

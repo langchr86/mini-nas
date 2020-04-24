@@ -85,9 +85,9 @@
       btrbk_subvolumes:
         - name: "share-main"
           snapshot_preserve_min: "1h"
-          snapshot_preserve: "12h 14d 5w 3m"
+          snapshot_preserve: "24h 14d 5w 3m"
           samba_config_file: "/etc/samba/share-main-include.conf"
-          timer_OnCalendar: "*-*-* *:00,10,20,30,40,50:00"
+          timer_OnCalendar: "*-*-* *:00,30:00"
 
   - role: rsync
     vars:
