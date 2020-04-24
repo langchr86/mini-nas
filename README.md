@@ -326,12 +326,12 @@ Known issues / future features
 
 * Playbook is not idempotent because the samba role does create its
   config file via `template` mechanism and the btrbk role does manipulate this.
-* Monitoring scripts missing
-  * quotas
-  * btrfs status
-  * smart
-* timers for scrubing / defrag
-* seting qutoas for subvolumes by role
+* monitoring: SMART scripts missing
+* monitoring: setup temperature sensors and scripts/timers
+* btrfs: role should take real list of device paths
+* btrfs: role should be able to manage multiple volumes
+* btrfs: role should allow to set qutoas for subvolumes
+* hdparm: ensure HDD spin down if idle
 
 
 
