@@ -6,7 +6,7 @@
   ignore_errors: true
   no_log: true
 
-- name: "Create btrfs filesystem on devices: {{ btrfs_dev_list_string }}"
+- name: "Create btrfs filesystem on devices: {{ btrfs_dev_list_string }}. Use 'wipefs -a <path>' to clean a not empty device."
   become: yes
-  command: "mkfs.btrfs -f --metadata {{ 'raid1' if btrfs_raid1_metadata else 'raid0' }} --data {{ 'raid1' if btrfs_raid1_data else 'raid0' }} --label {{ btrfs_pool_label }} {{ btrfs_dev_list_string }}"
+  command: "mkfs.btrfs --metadata {{ 'raid1' if btrfs_raid1_metadata else 'raid0' }} --data {{ 'raid1' if btrfs_raid1_data else 'raid0' }} --label {{ btrfs_pool_label }} {{ btrfs_dev_list_string }}"
   when: blkid.rc != 0
