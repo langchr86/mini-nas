@@ -288,7 +288,7 @@ Presentation
 This example was part of a presentation that shows the danger of personal data loss
 and a simple and inexpensive way to create a save place for all private data in a private network.
 
-TODO(clang): add presentation PDF
+Slides: [Data Safety and Backups](data_safety_and_backups.pdf)
 
 
 
