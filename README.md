@@ -14,7 +14,7 @@ and backups from client machines stored on.
 
 This example shows the capabilities of the used technologies
 and how to setup a simple but powerfull setup.
-Even though this setup is not complete and should considered *incomplete* for real-world usages.
+Even though this setup is not complete and should be considered *incomplete* for real-world usages.
 
 The whole point is to save all the important data in a secure place that is resilient to
 hardware, software and user failures. This covers e.g. the following use cases:
@@ -282,16 +282,6 @@ sudo btrfs balance start -musage=80 /mnt/pool-main
 
 
 
-Presentation
-------------
-
-This example was part of a presentation that shows the danger of personal data loss
-and a simple and inexpensive way to create a save place for all private data in a private network.
-
-Slides: [Data Safety and Backups](data_safety_and_backups.pdf)
-
-
-
 Real hardware
 -------------
 
@@ -331,6 +321,16 @@ Known issues / future features
 * btrfs: role should take real list of device paths
 * btrfs: role should be able to manage multiple volumes
 * btrfs: role should allow to set qutoas for subvolumes
+
+
+
+Presentation
+------------
+
+This example was part of a presentation that shows the danger of personal data loss
+and a simple and inexpensive way to create a save place for all private data in a private network.
+
+Slides: [Data Safety and Backups](data_safety_and_backups.pdf)
 
 
 
