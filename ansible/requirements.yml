@@ -4,3 +4,5 @@
   version: 'v2.7.1'
 - src: 'https://github.com/vlcty/ansible-systemd-timers.git'
   version: '3f300a7'
+- src: 'https://github.com/geerlingguy/ansible-role-hdparm.git'
+  version: '450d028'

@@ -331,7 +331,6 @@ Known issues / future features
 * btrfs: role should take real list of device paths
 * btrfs: role should be able to manage multiple volumes
 * btrfs: role should allow to set qutoas for subvolumes
-* hdparm: ensure HDD spin down if idle
 
 
 
