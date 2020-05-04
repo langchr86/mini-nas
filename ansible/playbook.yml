@@ -38,8 +38,7 @@
       volumes:
         - label: "pool-main"
           mount_path: "/mnt/pool-main"
-          raid1_data: on
-          raid1_metadata: on
+          mkfs_options: "--data raid1 --metadata raid1"
           status_log_path: "/mnt/pool-main/subvolumes/share-main"
           devices:
             - "/dev/sdc"

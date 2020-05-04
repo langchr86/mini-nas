@@ -9,9 +9,13 @@
   ignore_errors: true
   no_log: true
 
+# for options see: https://btrfs.wiki.kernel.org/index.php/Manpage/mkfs.btrfs
 - name: "Create btrfs filesystem on devices: '{{ device_list_string }}'. Use 'wipefs -a <path>' to clean a not empty device."
   become: yes
-  command: "mkfs.btrfs --metadata {{ 'raid1' if volume.raid1_metadata else 'raid0' }} --data {{ 'raid1' if volume.raid1_data else 'raid0' }} --label {{ volume.label }} {{ device_list_string }}"
+  command: >
+    mkfs.btrfs
+    {{ volume.mkfs_options|default('--data single') }}
+    --label {{ volume.label }} {{ device_list_string }}
   when: blkid.rc != 0
 
 - name: "Create mount point directory: '{{ volume.mount_path }}'"
