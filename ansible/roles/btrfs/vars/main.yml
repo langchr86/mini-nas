@@ -1,5 +1,4 @@
 ---
 
-btrfs_subvolumes_path: "{{ btrfs_mount_path }}/subvolumes"
 btrfs_quota_helper_path: "/usr/bin/btrfs-snapshot-quotas"
 btrfs_status_helper_path: "/usr/bin/btrfs-status"

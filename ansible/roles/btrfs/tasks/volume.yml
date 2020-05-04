@@ -1,27 +1,30 @@
-- name: "Ensure filesystem with label: '{{ btrfs_pool_label }}' not already existing"
-  command: "blkid --label {{ btrfs_pool_label }}"
+- set_fact:
+    device_list_string: "{{ volume.devices|join(' ') }}"
+
+- name: "Ensure filesystem with label: '{{ volume.label }}' not already existing"
+  command: "blkid --label {{ volume.label }}"
   register: blkid
   changed_when: false
   failed_when: false
   ignore_errors: true
   no_log: true
 
-- name: "Create btrfs filesystem on devices: '{{ btrfs_dev_list|join(' ') }}'. Use 'wipefs -a <path>' to clean a not empty device."
+- name: "Create btrfs filesystem on devices: '{{ device_list_string }}'. Use 'wipefs -a <path>' to clean a not empty device."
   become: yes
-  command: "mkfs.btrfs --metadata {{ 'raid1' if btrfs_raid1_metadata else 'raid0' }} --data {{ 'raid1' if btrfs_raid1_data else 'raid0' }} --label {{ btrfs_pool_label }} {{ btrfs_dev_list|join(' ') }}"
+  command: "mkfs.btrfs --metadata {{ 'raid1' if volume.raid1_metadata else 'raid0' }} --data {{ 'raid1' if volume.raid1_data else 'raid0' }} --label {{ volume.label }} {{ device_list_string }}"
   when: blkid.rc != 0
 
-- name: "Create mount point directory: '{{ btrfs_mount_path }}'"
+- name: "Create mount point directory: '{{ volume.mount_path }}'"
   become: yes
   file:
-    path: "{{ btrfs_mount_path }}"
+    path: "{{ volume.mount_path }}"
     state: directory
 
-- name: "Mount filesystem with label: '{{ btrfs_pool_label }}' at '{{ btrfs_mount_path }}'"
+- name: "Mount filesystem with label: '{{ volume.label }}' at '{{ volume.mount_path }}'"
   become: yes
   mount:
-    src: 'LABEL={{ btrfs_pool_label }}'
-    path: '{{ btrfs_mount_path }}'
+    src: 'LABEL={{ volume.label }}'
+    path: '{{ volume.mount_path }}'
     fstype: btrfs
     state: mounted
 
@@ -29,13 +32,16 @@
 
 - import_tasks: tasks/quota.yml
 
-- name: "Create subvolumes directory: '{{ btrfs_subvolumes_path }}'"
+- set_fact:
+    subvolumes_dir: "{{ volume.mount_path }}/subvolumes"
+
+- name: "Create subvolumes directory: '{{ subvolumes_dir }}'"
   become: yes
   file:
-    path: "{{ btrfs_subvolumes_path }}"
+    path: "{{ subvolumes_dir }}"
     state: directory
 
 - include_tasks: tasks/subvolume.yml
-  with_items: "{{ btrfs_subvolume_list }}"
+  with_items: "{{ volume.subvolumes }}"
   loop_control:
     loop_var: subvolume

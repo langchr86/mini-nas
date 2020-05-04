@@ -318,7 +318,6 @@ Known issues / future features
   config file via `template` mechanism and the btrbk role does manipulate this.
 * monitoring: SMART scripts missing
 * monitoring: setup temperature sensors and scripts/timers
-* btrfs: role should be able to manage multiple volumes
 * btrfs: role should allow to set qutoas for subvolumes
 
 

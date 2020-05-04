@@ -1,13 +1,13 @@
-- name: "Check if quotas enabled: '{{ btrfs_mount_path }}'"
+- name: "Check if quotas enabled: '{{ volume.mount_path }}'"
   become: yes
-  command: "btrfs qgroup show {{ btrfs_mount_path }}"
+  command: "btrfs qgroup show {{ volume.mount_path }}"
   register: qgroup_show
   changed_when: false
   failed_when: false
   ignore_errors: true
   no_log: true
 
-- name: "Enable quota support on volume: '{{ btrfs_mount_path }}'"
+- name: "Enable quota support on volume: '{{ volume.mount_path }}'"
   become: yes
-  command: "btrfs quota enable {{ btrfs_mount_path }}"
+  command: "btrfs quota enable {{ volume.mount_path }}"
   when: qgroup_show.rc != 0
