@@ -35,7 +35,9 @@
 
   - role: btrfs
     vars:
-      btrfs_dev_list_string: "/dev/sdc /dev/sdd"
+      btrfs_dev_list:
+        - "/dev/sdc"
+        - "/dev/sdd"
       btrfs_pool_label: "pool-main"
       btrfs_mount_path: "/mnt/pool-main"
       btrfs_raid1_data: on
