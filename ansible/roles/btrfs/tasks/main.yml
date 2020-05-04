@@ -3,8 +3,6 @@
   package:
     name: btrfs-tools
 
-- import_tasks: tasks/mkfs.yml
-- import_tasks: tasks/mount.yml
-- import_tasks: tasks/quota.yml
-- import_tasks: tasks/subvolumes.yml
-- import_tasks: tasks/status.yml
+- import_tasks: tasks/status-helper.yml
+
+- import_tasks: tasks/volume.yml

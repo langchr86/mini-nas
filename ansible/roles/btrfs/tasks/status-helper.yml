@@ -1,0 +1,17 @@
+- name: "Install helper to show used snapshot space: '{{ btrfs_quota_helper_path }}'"
+  become: yes
+  copy:
+    src: "btrfs-snapshot-quotas"
+    dest: "{{ btrfs_quota_helper_path }}"
+    owner: "root"
+    group: "root"
+    mode: 0755
+
+- name: "Install helper to show volume status: '{{ btrfs_status_helper_path }}'"
+  become: yes
+  template:
+    src: "btrfs-status"
+    dest: "{{ btrfs_status_helper_path }}"
+    owner: "root"
+    group: "root"
+    mode: 0755

@@ -1,11 +1,5 @@
-- name: "Install helper to show volume status: '{{ btrfs_status_helper_path }}'"
-  become: yes
-  template:
-    src: "btrfs-status"
-    dest: "{{ btrfs_status_helper_path }}"
-    owner: "root"
-    group: "root"
-    mode: 0755
+- set_fact:
+    btrfs_status_log_file: "{{ btrfs_status_log_path }}/btrfs-status-{{ btrfs_pool_label }}.log"
 
 - set_fact:
     timer_tags:
@@ -17,7 +11,8 @@
           timer_AccuracySec: 1m
           timer_OnCalendar: "*-*-* 03:00:00"
 
-- include_role:
+- name: "Setup timer which logs status of: '{{ btrfs_mount_path }}'"
+  include_role:
     name: ansible-systemd-timers
     apply:
       become: yes

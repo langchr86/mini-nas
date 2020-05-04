@@ -11,12 +11,3 @@
   become: yes
   command: "btrfs quota enable {{ btrfs_mount_path }}"
   when: qgroup_show.rc != 0
-
-- name: "Install helper to show used snapshot space: '{{ btrfs_quota_helper_path }}'"
-  become: yes
-  copy:
-    src: "btrfs-snapshot-quotas"
-    dest: "{{ btrfs_quota_helper_path }}"
-    owner: "root"
-    group: "root"
-    mode: 0755
