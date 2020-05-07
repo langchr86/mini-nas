@@ -18,7 +18,6 @@
         - 'kodi'
 
   roles:
-  - role: swapfile
   - role: bash
   - role: tmux
 
