@@ -320,7 +320,7 @@ and let ansible do its magic:
 sudo apt-get install software-properties-common
 sudo apt-add-repository ppa:ansible/ansible
 sudo apt-get update
-sudo apt-get install ansible -y
+sudo apt-get install git ansible -y
 
 git clone https://github.com/langchr86/mini-nas
 cd mini-nas
