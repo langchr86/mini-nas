@@ -233,7 +233,7 @@ sudo btrfs-snapshot-quotas /mnt/pool-main/
 ### S.M.A.R.T. and general disk status
 
 It is important to not only monitor the health of the filesystem but also of the disks.
-Most modern disks provide the so called S.M.A.R.T. interface to read out statistics
+Most modern disks provide the so called 'S.M.A.R.T.' interface to read out statistics
 that can help to detect when hardware failures will happen.
 
 To read out those statistics for all drives we can use the script:
@@ -242,7 +242,7 @@ To read out those statistics for all drives we can use the script:
 sudo disk-status
 ~~~~~~
 
-This gives us the current disk temperatures and a short health eport at the top.
+This gives us the current disk temperatures and a short health report at the top.
 After that the extensive statistics report of all disks follows.
 
 In addition we can run short or long self-tests on all disks with:

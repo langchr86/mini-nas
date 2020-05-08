@@ -79,7 +79,7 @@
 #      disk_monitoring_status_log_path: "/mnt/pool-main/subvolumes/share-main"
 #      disk_monitoring_devices:
 #        - path: '/dev/sda'
-#          smart_type: 'scsi'  # type used in the -d parameter of smartctl
+#          smart_type: 'scsi'  # Type used in the -d parameter of smartctl. See: https://www.smartmontools.org/wiki/Supported_USB-Devices
 #          temp_type: 'SATA'   # TYPE field used of hddtemp
 #        - path: '/dev/sdb'
 #          smart_type: 'scsi'
