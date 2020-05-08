@@ -342,6 +342,13 @@ Known issues / future features
 
 * Playbook is not idempotent because the samba role does create its
   config file via `template` mechanism and the btrbk role does manipulate this.
+* ddclient: dyn dns client
+* travis (not yet for idempotence)
+* use https://github.com/stuvusIT/smartd
+* pre-sleep in rsync role
+* timers using as long to "start" as the whole task?
+* WOL
+* static IP
 
 
 

@@ -17,6 +17,8 @@
         - 'clang'
         - 'kodi'
 
+      # ensure that existing users are in group "users"
+
   roles:
   - role: bash
   - role: tmux
