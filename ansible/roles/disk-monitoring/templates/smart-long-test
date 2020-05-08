@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash
 
 if [[ "$EUID" -ne 0 ]]; then
   echo "Please run as root"
@@ -7,5 +7,5 @@ fi
 
 
 {% for device in disk_monitoring_devices %}
-smartctl -t long {{ device.path }} -d {{ device.smart_type|default('auto') }} | true
+smartctl -t long {{ device.path }} -d {{ device.smart_type|default('auto') }}
 {% endfor %}
