@@ -23,6 +23,8 @@
 
   - role: git-tools
     vars:
+      git_user_name: "Christian Lang"
+      git_user_email: "lang.chr86@gmail.com"
       git_aliases: on
       git_rerere: on
       git_editor_nano: on
@@ -40,8 +42,8 @@
           mkfs_options: "--data raid1 --metadata raid1"
           status_log_path: "/mnt/pool-main/subvolumes/share-main"
           devices:
-            - "/dev/sdc"
-            - "/dev/sdd"
+            - "/dev/disk/by-id/wwn-0x5000c500ccd218c1"
+            - "/dev/disk/by-id/wwn-0x5000c500ccecce62"
           subvolumes:
             - "share-main"
 
@@ -50,33 +52,36 @@
     vars:
       filesystems:
         - label: "backups"
-          device: "/dev/sde"
+          device: "/dev/disk/by-uuid/caae1639-8ea0-4019-8dac-b23104c33039"
           mount_path: "/mnt/backups"
           type: "ext4"
 
 # Because the virtual disks do not support spin-down this role is disabled. Enable on real hardware.
 # See. https://github.com/adelolmo/hd-idle
-#  - role: hd-idle
-#    vars:
-#      disks:
-#        - path: "/dev/disk/by-uuid/caae1639-8ea0-4019-8dac-b23104c33039"
-#          idle_time_seconds: "1200"
-#        - path: "/dev/disk/by-id/wwn-0x5000c500ccd218c1"
-#          idle_time_seconds: "3600"
-#        - path: "/dev/disk/by-id/wwn-0x5000c500ccecce62"
-#          idle_time_seconds: "3600"
+  - role: hd-idle
+    vars:
+      disks:
+        - path: "/dev/disk/by-uuid/caae1639-8ea0-4019-8dac-b23104c33039"
+          idle_time_seconds: "1200"
+        - path: "/dev/disk/by-id/wwn-0x5000c500ccd218c1"
+          idle_time_seconds: "3600"
+        - path: "/dev/disk/by-id/wwn-0x5000c500ccecce62"
+          idle_time_seconds: "3600"
 
 # Because the virtual disks do not support SMART this role is disabled. Enable on real hardware.
-#  - role: disk-monitoring
-#    vars:
-#      disk_monitoring_status_log_path: "/mnt/pool-main/subvolumes/share-main"
-#      disk_monitoring_devices:
-#        - path: '/dev/sda'
-#          smart_type: 'scsi'  # Type used in the -d parameter of smartctl. See: https://www.smartmontools.org/wiki/Supported_USB-Devices
-#          temp_type: 'SATA'   # TYPE field used of hddtemp
-#        - path: '/dev/sdb'
-#          smart_type: 'scsi'
-#        - path: '/dev/sdc'
+  - role: disk-monitoring
+    vars:
+      disk_monitoring_status_log_path: "/mnt/pool-main/subvolumes/share-main"
+      disk_monitoring_devices:
+      # - path: '/dev/sda'
+      #   smart_type: 'scsi'  # Type used in the -d parameter of smartctl. See: https://www.smartmontools.org/wiki/Supported_USB-Devices
+      #   temp_type: 'SATA'   # TYPE field used of hddtemp
+        - path: '/dev/disk/by-id/wwn-0x5000c500ccd218c1'
+          smart_type: 'sat'
+          temp_type: 'SATA'
+        - path: '/dev/disk/by-id/wwn-0x5000c500ccecce62'
+          smart_type: 'sat'
+          temp_type: 'SATA'
 
   - role: ansible-role-samba
     become: yes
