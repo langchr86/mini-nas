@@ -126,7 +126,7 @@
         - name: "backup-share-main"
           src: "/mnt/pool-main/subvolumes/share-main/"
           dest: "/mnt/backups/share-main/"
-          timer_OnCalendar: "*-*-* *:05:00"
+          timer_OnCalendar: "*-*-* 03:00:00"
 
   - role: rsync-daemon
     vars:
