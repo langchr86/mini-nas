@@ -1,0 +1,22 @@
+- name: "Check if hd-idle already installed"
+  package_facts:
+    manager: auto
+
+- name: "Install hd-idle"
+  become: yes
+  apt:
+    deb: "{{ hdidle_deb_path }}"
+  when: "'hd-idle' in ansible_facts.packages"
+
+- name: "Create config file: '{{ hdidle_config_path }}'"
+  become: yes
+  template:
+    src: "hd-idle.conf"
+    dest: "{{ hdidle_config_path }}"
+
+- name: "Enable and start hd-idle service"
+  become: yes
+  systemd:
+    name: hd-idle
+    enabled: yes
+    state: started

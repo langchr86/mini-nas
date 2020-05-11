@@ -54,24 +54,17 @@
           mount_path: "/mnt/backups"
           type: "ext4"
 
-  - role: ansible-role-hdparm
-    become: yes
-    vars:
-      # see https://linux.die.net/man/8/hdparm for options
-      # or default config file http://manpages.ubuntu.com/manpages/trusty/man5/hdparm.conf.5.html
-      hdparm_devices:
-        - dev: /dev/sdc
-          options:
-            - "spindown_time = 180" # -S: Count of 5 seconds or other if bigger then 240.
-            - "apm = 64"            # -B: 1-127 allow spindown. Lower value means more power saved.
-        - dev: /dev/sdd
-          options:
-            - "spindown_time = 180" # 15 minutes
-            - "apm = 64"
-        - dev: /dev/sde
-          options:
-            - "spindown_time = 180"
-            - "apm = 64"
+# Because the virtual disks do not support spin-down this role is disabled. Enable on real hardware.
+# See. https://github.com/adelolmo/hd-idle
+#  - role: hd-idle
+#    vars:
+#      disks:
+#        - path: "/dev/disk/by-uuid/caae1639-8ea0-4019-8dac-b23104c33039"
+#          idle_time_seconds: "1200"
+#        - path: "/dev/disk/by-id/wwn-0x5000c500ccd218c1"
+#          idle_time_seconds: "3600"
+#        - path: "/dev/disk/by-id/wwn-0x5000c500ccecce62"
+#          idle_time_seconds: "3600"
 
 # Because the virtual disks do not support SMART this role is disabled. Enable on real hardware.
 #  - role: disk-monitoring

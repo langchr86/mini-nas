@@ -326,7 +326,8 @@ git clone https://github.com/langchr86/mini-nas
 cd mini-nas
 
 nano ansible/playbook.yml
-# enable disk-monitoring role
+# enable and configure hd-idle role
+# enable and configure disk-monitoring role
 # make own customization
 
 ./run-local.sh
