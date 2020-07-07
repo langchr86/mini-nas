@@ -1,7 +1,14 @@
-- name: Install btrfs tools
+- name: Load OS specific variables
+  include_tasks: "{{ item }}"
+  with_first_found:
+    - "tasks/os_{{ ansible_distribution }}.yml"
+    - "tasks/os_{{ ansible_os_family }}.yml"
+    - "tasks/os_Unknown.yml"
+
+- name: "Install btrfs packages: {{ btrfs_packages }}"
   become: yes
   package:
-    name: btrfs-tools
+    name: "{{ btrfs_packages }}"
 
 - import_tasks: tasks/status-helper.yml
 

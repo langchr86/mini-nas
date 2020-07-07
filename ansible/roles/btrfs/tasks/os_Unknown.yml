@@ -1,0 +1,4 @@
+---
+
+- name: Include generic variables
+  include_vars: "unknown_distro.yml"
