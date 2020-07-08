@@ -88,6 +88,7 @@
   - role: ansible-role-samba
     become: yes
     vars:
+      samba_mitigate_cve_2017_7494: off
       # change passwords later with 'sudo smbpasswd clang' etc.
       samba_users:
         - name: clang
