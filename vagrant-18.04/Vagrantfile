@@ -1,11 +1,11 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-vm_name = "mini-nas"
+vm_name = "mini-nas-18"
 
 Vagrant.configure("2") do |config|
-  config.vm.box = "generic/ubuntu2004"
-  config.vm.box_version = "3.0.12"
+  config.vm.box = "ubuntu/bionic64"
+  config.vm.box_version = "20200407.0.0"
 
   config.vm.network "public_network"
 
@@ -19,17 +19,14 @@ Vagrant.configure("2") do |config|
     vb.customize ["modifyvm", :id, "--vram", "64"]
     vb.customize ["modifyvm", :id, "--spec-ctrl", "on"]
 
-    disk_count = 4
+    disk_count = 3
     disk_size_gb = 20
     disk_format = 'vdi'
-    disk_controller = 'SCSI'
+    disk_controller = 'SCSI'		# already existing in ubuntu box
 
     (0..disk_count-1).each do |i|
 	  disk_file = "disks/#{vm_name}-data-disk-#{i}.#{disk_format}"
 	  unless File.exist?(disk_file)
-	    if (i == 0)
-	      vb.customize ["storagectl", :id, "--name", disk_controller, "--add", "sata"]		# create disk controller if not already existing
-	    end
         vb.customize ['createhd', '--filename', disk_file, '--format', disk_format, '--size', disk_size_gb * 1024]
       end
 	  vb.customize ['storageattach', :id,  '--storagectl', disk_controller, '--port', i+2, '--device', 0, '--type', 'hdd', '--medium', disk_file]
@@ -38,14 +35,9 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.hostname = vm_name
-  config.vm.synced_folder "./ansible/", "/vagrant/ansible"
-
-  # remove not yet supported ansible ppa
-  config.vm.provision "shell",
-    inline: "rm -f /etc/apt/sources.list.d/ansible-ansible-focal.list"
+  config.vm.synced_folder "../ansible/", "/vagrant/ansible"
 
   config.vm.provision "ansible_local" do |ansible|
-    ansible.install_mode = "pip"
     ansible.playbook = "/vagrant/ansible/playbook.yml"
     ansible.galaxy_role_file = "/vagrant/ansible/requirements.yml"
   end
