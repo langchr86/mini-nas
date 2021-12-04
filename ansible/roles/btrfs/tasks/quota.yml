@@ -7,7 +7,7 @@
   ignore_errors: true
   no_log: true
 
-- name: "Enable quota support on volume: '{{ volume.mount_path }}'"
+- name: "Disable quota support on volume: '{{ volume.mount_path }}' because this is unstable and has bad performance impact"
   become: yes
-  command: "btrfs quota enable {{ volume.mount_path }}"
-  when: qgroup_show.rc != 0
+  command: "btrfs quota disable {{ volume.mount_path }}"
+  when: qgroup_show.rc == 0

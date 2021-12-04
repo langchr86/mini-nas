@@ -1,4 +1,4 @@
-- name: "Install helper to show used snapshot space: '{{ btrfs_quota_helper_path }}'"
+- name: "Install helper to show used snapshot space: '{{ btrfs_quota_helper_path }}'. This will only work if quotas enabled."
   become: yes
   copy:
     src: "btrfs-snapshot-quotas"
