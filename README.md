@@ -360,7 +360,9 @@ References
 
 Some parts of my personal setup are published in other github projects:
 
-* [hostcontrold](https://github.com/langchr86/hostcontrold):
+* [langchr86/server-config](https://github.com/langchr86/server-config):
+  Configuration for my real server infrastructure.
+* [langchr86/hostcontrold](https://github.com/langchr86/hostcontrold):
   Small daemon that overwatches servers in a network and shuts them down to save power.
 
 
